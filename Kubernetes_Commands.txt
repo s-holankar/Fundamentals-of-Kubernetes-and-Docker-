@@ -1,0 +1,331 @@
+docker swarm --help
+
+docker info 
+
+docker node ls
+
+docker images | grep ubuntu
+
+
+
+Kubernetes Architecture Details :
+
+Internal load balancer : used where private IPs are needed at the frontend only.
+
+CRI-Container Runtime : enables the kubelet to use wide variety of available cri 
+
+You need a working container runtime on each Node in your cluster, so that the kubelet can launch Pods and their containers.
+
+A resource quota, defined by a ResourceQuota object, provides constraints that limit aggregate resource consumption per namespace.
+
+A tenant is a group of users who share a common access with specific privileges to the software instance.
+
+The ETCD Datastore stores information regarding the cluster such as Nodes, PODS, Configs, Secrets, Accounts, Roles, Bindings and Others.
+
+Every information you see when you run the kubectl get command is from the ETCD Server.
+
+Kube-apiserver is responsible for authenticating, validating requests, retrieving and Updating data in ETCD key-value store. 
+
+In fact kube-apiserver is the only component that interacts directly to the etcd datastore.
+
+The other components such as kube-scheduler, kube-controller-manager and kubelet uses the API-Server to update in the cluster in their respective areas
+
+Within Kubernetes Cluster, every pod can reach every other pod, this is accomplish by deploying a pod networking cluster to the cluster.
+
+Kube-Proxy is a process that runs on each node in the kubernetes cluster.
+
+Kubernetes doesn't deploy containers directly on the worker node.
+
+Pod will have a one-to-one relationship with containers running your application.
+
+A single pod can have multiple containers except for the fact that they are usually not multiple containers of the same kind.
+
+MetaData Database in kubernetes - 
+
+k8 components hirerarchy :
+
+k8 namespace -> replication controller -> pod -> container 
+
+k8 object shows staus and have spec for example - deployment 
+
+controller in k8 are control loops that waatch the state of your clustern, then make or request changes where needed.
+
+kubernetes api  lets you query and manipulate the state of Api objects in k8
+pods , namespaces , configmaps events 
+
+pod can be single containered or multiple conatinered 
+
+pods share two components for their container : networking and storage 
+
+pods are used to deploy application 
+
+depolyment is way to mangage  the creation and scaling pods
+
+kubectl cordon $NODENAME – to unschedule node 
+
+kubectl describe node <insert-node-name-here> - get info about node
+
+kubectl get pods
+
+kubectl get nodes - to get the list of pods
+
+kubectl get po -o yaml - output in json format
+
+To know more about pod - kubectl explain pods|less
+
+kubectl describe pod firstpod
+
+To watch pods - kubectl get pods -w
+
+to delete pod - kubectl delte pod firstpod
+
+kubectl label pod firstpod env=testing
+
+To change label - kubectl label --overwrite pod firstpod |less
+
+to label all pods - kubectl label pods --all status=xyz
+
+kubectl pods --show-labels
+
+kubectl secondpod --dry-run --generator=run-pod/v1 --image=coolgourav11/nginx-custom - its client side command
+
+kubectl delete pods --all
+
+to created pod on k8s - write .yaml file then
+
+kubectl create -f firstpod.yml 
+
+kubectl explain pod --recursive
+
+kubectl config get-contexts -To get the current contexts configured in your kubeconfig file
+
+kubectl get namespaces - a plain-text list of all namespaces
+
+kubectl get pods --field-selector=spec.nodeName=[server-name] - Display a list of all pods running on a particular node server
+
+kubectl get replicationcontroller [replication-controller-name]
+
+kubectl get replicationcontroller,services
+
+kubectl get daemonset -Show a plain-text list of all daemon sets
+
+https://phoenixnap.com/kb/kubectl-commands-cheat-sheet
+
+kubectl apply -f mysecondpod.yml - also creates pod 
+
+kubectl get po
+
+kubectl get po -o wide
+
+kubectl get deploy
+
+kubectl auth
+
+kubectl auth can-i create pods --all-namespaces - output yes mean you can create pods in all namespaces
+
+kubectl cluster info 
+
+kubectl get componentstatus
+
+kubectl api-resources
+
+kubectl get events
+
+kubectl get events -w
+
+kubectl exec -it ubuntu --namespace=ktest -- whoami
+
+kubectl exec -it ubuntu --namespace=ktest -- bash
+
+kubectl version --short
+
+
+To get ip address :kubectl get pod nginx --template '{{.status.podIP}}'
+
+kubectl get pod ubuntu --namespace=ktest --template '{{.status.podIP}}'
+
+
+watch kubectl get nodes
+
+ps -aux |grep kubelet - running process and affective options by listing the process on worker node and searching for kubelet.
+
+kubectl run nginx --image nginx - To deploy a docker container by creating a POD
+
+kubectl top pod <pod_name> --namespace=name
+
+kubectl get all
+
+kubectl get replicaset
+
+kubectl get pods --namespace=kube-system
+
+kubectl get pods --namespace=default
+
+To create namespace in kubernetes : $ kubectl create -f namespace-dev.yaml
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: dev
+
+kubectl top node - to view cluster performance
+
+kubectl top pod - View performance metrics of pod
+
+Autoscale : Creates an autoscaler that automatically chooses and sets the number of pods that run in a kubernetes cluster.
+
+Command : kubectl autoscale deployment nginx --min=2 --max=10 --cpu-percent=80
+
+Copy : kubectl cp <file-spec-src> <file-spec-dest> https://kubectl.docs.kubernetes.io/references/kubectl/cp/
+
+Using create command , we can create confingmap , deployment , jobs , roles ,secrets // https://kubectl.docs.kubernetes.io/references/kubectl/create/
+
+kubectl delete ([-f FILENAME] | [-k DIRECTORY] | TYPE [(NAME | -l label | --all)])
+
+ex: kubectl delete deployments nginx
+
+kubectl describe (-f FILENAME | TYPE [NAME_PREFIX | -l label] | TYPE/NAME)
+
+ex: kubectl describe deployments
+
+kubectl exec (POD | TYPE/NAME) [-c CONTAINER] [flags] -- COMMAND [args...]
+
+ex: kubectl exec nginx-6db489d4b7-qkd5d -- date
+
+Expose a resource as a new Kubernetes service.
+
+kubectl expose po nginx-6db489d4b7-9wgn9 --port=80 --target-port=8000
+
+Get command with options : 
+
+default : kubectl get deployments nginx
+
+raw : kubectl get deployments -o yaml  kubectl get deployments -o json
+
+options :https://kubectl.docs.kubernetes.io/references/kubectl/get/options/
+
+kubectl kustomize <dir>
+kubectl 
+kubectl kustomize
+
+kubectl cluster-info
+
+https://kubectl.docs.kubernetes.io/references/kubectl/label/
+
+kubectl logs [-f] [-p] (POD | TYPE/NAME) [-c CONTAINER]
+
+https://kubectl.docs.kubernetes.io/references/kubectl/patch/
+
+https://kubectl.docs.kubernetes.io/references/kubectl/port-forward/
+
+https://kubectl.docs.kubernetes.io/references/kubectl/proxy/
+
+https://kubernetes.io/docs/concepts/workloads/pods/
+
+
+To use kubernetes we have to build cluster require set of machines that run the Kubernetes control plane and the containers.
+
+which can be given by Amazon Web Services (AWS), Google Cloud Platform (GCP), or Microsoft Azure.
+
+https://foxutech.medium.com/kubernetes-pod-creation-what-happen-when-we-are-create-a-pod-78edafc038b6
+
+
+Airflow on Kubernetes(K8) commands:
+
+export RELEASE_NAME=example1
+
+export NAMESPACE=example1
+
+kubectl get pods --namespace $NAMESPACE
+
+kubectl describe pod example1-webserver-887c6646f-759lv  --namespace $NAMESPACE
+
+kubectl describe pod exam1-release-postgresql-0 --namespace=exam1
+
+
+kubectl port-forward --help
+
+kubectl get service --namespace $NAMESPACE
+
+Airflow Webserver: kubectl port-forward svc/example1-webserver 8080:8080 --namespace example1
+
+kubectl port-forward example1-webserver-887c6646f-759lv 8080:5000
+
+example1-webserver       ClusterIP   10.96.39.154    <none>        8080/TCP            5h17m
+
+kubectl get po
+
+kubectl get svc
+
+kubectl port-forward example1-webserver-887c6646f-759lv 8080:5000 --namespace $NAMESPACE
+
+kubect port-forward  --address 0.0.0.0 svc/$RELEASE_NAME-webserver 8080:8080 --namespace $NAMESPACE - for listening the services from port
+
+nohup kubectl port-forward  --address 0.0.0.0 svc/$RELEASE_NAME-webserver 8080:8080 --namespace $NAMESPACE & - to keep process running in the background
+
+kubectl describe pod exam1-release-postgresql-0 --namespace=exam1
+
+kubectl exec -it exam1-release-worker-0 --namespace=exam1 -- bash
+
+kubectl exec -it exam1-release-scheduler-659596bb9-dw2nl --namespace=exam1 -- bash
+
+kubectl exec -it exam1-release-webserver-7d4f8c48dc-2997d --namespace=exam1 -- bash
+
+kubectl describe pod exam1-release-worker-0 --namespace=exam1
+
+kubectl edit pod exam1-release-worker-0 --namespace=exam1
+
+kubectl logs exam1-release-scheduler-659596bb9-dw2nl --namespace=exam1
+
+airflow_configmap = exam1-release-airflow-config
+
+airflow_local_settings_configmap = exam1-release-airflow-config
+
+kubectl edit configmap exam1-release-airflow-config --namespace=exam1
+
+kubectl get configmaps exam1-release-airflow-config -o yaml --namespace=exam1
+
+copy of changes saved in this path ------ /tmp/kubectl-edit-322025617.yaml
+
+kubectl get pods --namespace=exam1
+
+kubectl exec -it exam1-release-scheduler-659596bb9-dw2nl --namespace=exam1 -- bash
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

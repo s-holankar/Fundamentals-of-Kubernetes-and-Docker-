@@ -1,0 +1,90 @@
+docker images
+
+
+kubectl get pods -o wide
+kubectl get nodes -o wide
+
+
+Docker Kubernetes and JAR basic commands
+
+https://medium.com/codingthesmartway-com-blog/docker-beginners-guide-part-1-images-containers-6f3507fffc98
+
+https://www.mygreatlearning.com/blog/top-essential-docker-commands/
+
+
+docker
+docker version
+docker run -it -p 80:80 nginx
+docker ps - list the containers
+docker rm [CONTAINER_ID]
+docker images
+docker images rm [IMAGE_ID]
+docker rmi image_name
+docker pull nginx - without running container pull image
+docker run -d -p 80:80 nginx - running in detached mode means running in background
+docker stop [CONTAINER_ID] - to stop detached mode
+docker ps -a - to get overview of process
+docker run -d -p 80:80 --name mynginx01 nginx - assigning container names
+
+docke run -d mynginx01 
+
+docker stop mynginx01 - stop conatiner with conatiner name
+docker start mynginx01 - start conatiner
+docker exec -it mynginx01 bash - will execute commands inside bash
+docker logs container_id - to view docker logs
+docker ps --all
+
+
+To stop all the containers at once, run the command: docker stop $(docker ps -aq)
+
+To remove all the stopped containers at once, run the command: docker rm $(docker ps -aq)
+
+Then run the command to delete all the available images: docker rmi $(docker images -aq)
+
+
+open the file using vi /root/webapp-color/Dockerfile (or using commands such as cat/more/less/vim e.t.c) and 
+
+look for the FROM instruction or search for it directly using grep -i FROM /root/webapp-color/Dockerfile.
+
+docker build -t webapp-color . - to run this command from within the directory that has the Dockerfile
+
+docker run python:3.6 cat /etc/*release - to get details base os image
+to get the env fields from the inspect command: docker inspect <container-name> | grep -A 10 Env
+docker inspect 3a4f2beaa7e4 | grep -A 10 Env
+
+docker network ls
+docker network inspect bridge
+
+
+Dockerfile: Specifications for how the image should be built
+Image: Like a CD: it contains all code but it doesn’t do anything yet.
+Container: A running image. Think of this as the CD that you’ve just put in the CD-player. It’s executing the image.
+
+docker run = docker create + docker start
+
+docker run -i greet
+OR
+docker run -i -t greet
+OR
+docker run -it greet
+
+Docker File :
+
+FROM node
+RUN npm install
+CMD ["npm", "start"]
+
+how to deploy applications
+
+
+
+
+
+
+
+
+
+
+
+
+
